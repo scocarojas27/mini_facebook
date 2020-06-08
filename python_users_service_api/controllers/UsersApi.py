@@ -23,6 +23,7 @@ def create_new_user():
         name = json['name']
         password = json['password']
         username = json['username']
+        #print("Este es el: "+str(username))
         if email is not None and name is not None and password is not None and username is not None:
             user = users_service.create_new_user(email, name, password, username)
             if user is None:

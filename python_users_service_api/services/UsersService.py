@@ -7,6 +7,7 @@ class UsersService(object):
         self.users_repository = UsersRepository()
 
     def create_new_user(self, email, name, password, username):
+        #print("Hola")
         return self.users_repository.create_new_user(email, name, password, username)
 
     def login(self,
