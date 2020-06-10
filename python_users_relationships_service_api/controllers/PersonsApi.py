@@ -2,6 +2,8 @@ from flask import Blueprint, request
 from app import app
 from services.PersonsService import PersonsService
 from flask import jsonify
+from bson import json_util, ObjectId
+import json
 persons_api = Blueprint('persons_api', __name__)
 
 persons_service = PersonsService()
@@ -41,7 +43,9 @@ def get_all_persons():
 def get_friends(personId):
     try:
         row = persons_service.get_friends(personId)
-        resp = jsonify(row)
+        new_row = json.loads(json_util.dumps(row))
+        resp = jsonify(new_row)
+        print(resp)
         resp.status_code = 200
         return resp
     except Exception as e:
@@ -61,7 +65,8 @@ def get_person_by_name(name):
 def get_friends_from_my_friends(personId):
     try:
         row = persons_service.get_friends_from_my_friends(personId)
-        resp = jsonify(row)
+        new_row = json.loads(json_util.dumps(row))
+        resp = jsonify(new_row)
         resp.status_code = 200
         return resp
     except Exception as e:

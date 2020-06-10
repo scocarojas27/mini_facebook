@@ -12,32 +12,15 @@ class PublicationsService(object):
 
     def send_publication(self,
                          publication):
-        try:
-            credentials = pika.PlainCredentials(app.config['rabbitmq_user'],
-                                                app.config['rabbitmq_password'])
-            connection = pika.BlockingConnection(pika.ConnectionParameters(app.config['rabbitmq_host'],
-                                                                           app.config['rabbitmq_port'],
-                                                                           '/',
-                                                                           credentials))
-            channel = connection.channel()
-            channel.exchange_declare(exchange=app.config['rabbitmq_exchange'],
-                                    exchange_type='fanout')
-
-            today = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
-            publication['publication_date'] = str(today)
-            print(publication)
-            print("publication {0}".format(publication))
-            channel.basic_publish(exchange=app.config['rabbitmq_exchange'],
-                                routing_key='',
-                                body=json.dumps(publication))
-            print(" [x] Sent %r" % publication,)
-            connection.close()
-            return True
-        except Exception as e:
-            app.logger.error("Unexpected error:", sys.exc_info()[0])
-            return False
+        print("Hola 2")
+        return self.publications_repository.send_publication(publication)
 
     def documents_count(self):
         response = self.publications_repository.count()
         app.logger.info("response {0}".format(response))
         return response
+
+    def get_own_posts(self, id):
+        return self.publications_repository.getOwnPosts(id)
+    def get_friends_posts(self, id):
+        return self.publications_repository.getFriendsPublications(id)

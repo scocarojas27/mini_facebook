@@ -8,8 +8,8 @@ from time import time
 ########################################################################################################################
 
 # connection to publications api service
-# conn = http.client.HTTPConnection("localhost:5015")
-conn = http.client.HTTPConnection("localhost:8282")
+conn = http.client.HTTPConnection("localhost:5020")
+#conn = http.client.HTTPConnection("localhost:8282")
 
 
 ########################################################################################################################
@@ -18,15 +18,15 @@ conn = http.client.HTTPConnection("localhost:8282")
 
 def login():
     # connection to users api service
-    conn_login = http.client.HTTPConnection("localhost:8282")
+    conn_login = http.client.HTTPConnection("localhost:5010")
     headers_default = {'Content-type': 'application/json'}
 
     login_post = {
-        'username': 'blue',
-        'password': '123456'
+        'username': 'white',
+        'password': 'qwerty'
     }
     json_data_post = json.dumps(login_post)
-    conn_login.request("POST", "/users/login", json_data_post, headers={'Content-type': 'application/json'})
+    conn_login.request("POST", "/users/login", json_data_post, headers=headers_default)
 
     res = conn_login.getresponse()
     data = res.read()
@@ -50,11 +50,17 @@ headers = login()
 # headers={'Content-type': 'application/json'}
 
 login_post = {
-    'user_id': 1,
+    'user_id': 2,
     'description': 'El Dr. Rashid Buttar acusa a Bill Gates y Anthony Faucci la máxima autoridad en el manejo de la pandemia del coronavirus en EE.UU., de crear SARS-COV2 y de intentar vacunar en masa a la población para diezmarla y controlarla'
 }
+query_post = {
+    'user_id' : 1
+}
+data_get = json.dumps(query_post)
 json_data_post = json.dumps(login_post)
-conn.request("POST", "/publications", json_data_post, headers=headers)
+#conn.request("POST", "/publications", json_data_post, headers=headers)
+#conn.request("GET", "/publications", data_get, headers=headers)
+conn.request("GET", "/publications/friends", data_get, headers=headers)
 
 # conn.request("GET", "/ping", headers={'Content-type': 'application/json'})
 

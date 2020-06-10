@@ -4,7 +4,6 @@ from db_config import driver
 class PersonsRepository(object):
 
     def add_person(self, id, name, email, login, password):
-        print("ESTE ES EL PUTO DRIVER "+str(driver))
         with driver.session() as session:
             result = session.run("CREATE (n:Person{id:$_id, name:$_name, email:$_email, login:$_login, password:$_password})"
                                  ,_id=id, _name=name, _email=email, _login=login, _password=password).value()
@@ -22,12 +21,13 @@ class PersonsRepository(object):
 
     def get_friends(self, personId):
         with driver.session() as session:
-            result = session.run("MATCH (n:Person{id:$id})-[:FRIEND]->(fof)", id=int(personId)).data()
+            result = session.run("MATCH (n:Person{id:$id})-[:FRIEND]->(fof) RETURN fof.id as id", id=int(personId)).data()
+            print(str(result))
             return result
 
     def get_friends_from_my_friends(self, personId):
         with driver.session() as session:
-            result = session.run("MATCH (n:Person{id:$id})-[:FRIEND]->(myFriends)-[:FRIEND]->(othersFriends)", id=int(personId)).data()
+            result = session.run("MATCH (n:Person{id:$id})-[:FRIEND]->(myFriends)-[:FRIEND]->(othersFriends) RETURN othersFriends.id as id", id=int(personId)).data()
             return result
 
     def add_new_relationship(self, personId1, personId2):
