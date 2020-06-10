@@ -5,7 +5,7 @@ headers = {
     'Content-type': 'application/json'
 }
 
-class PersonsRepository(object):
+class GatewayRepository(object):
     def gateway(self, data, url):
 
         json_data_post = json.dumps(data)
@@ -14,11 +14,11 @@ class PersonsRepository(object):
             conn = http.client.HTTPConnection("localhost:5010")
     
             if 'create' not in url:
-
-                conn.request("POST", "/users/login", json_data_post, headers=headers)
+                conn = http.client.HTTPConnection("localhost:5010")
+                conn.request("POST", "/users/login", json_data_post, headers={'Content-type': 'application/json'})
                 res = conn.getresponse()
                 data = res.read()
-
+                print(data)
                 data_json = json.loads(data.decode("utf-8"))
                 jwt_token = data_json['token']
 
@@ -27,11 +27,12 @@ class PersonsRepository(object):
                     'authorization': jwt_token
                 }
                 if 'friendRequestId' in url or 'send-friend-request' in url:
-                    conn.request('POST', url, headers=new_headers)
+                    conn.request('POST', url, headers=headers)
                 else:
-                    conn.request('GET', url, headers=new_headers)
+                    conn.request('GET', url, headers=headers)
             else:
                 conn.request("POST", url, json_data_post, headers=headers)
+            res = conn.getresponse()
 
         elif 'persons' in url:
             conn = http.client.HTTPConnection("localhost:5000") 
@@ -39,14 +40,15 @@ class PersonsRepository(object):
                 conn.request('POST', url, headers=headers)
             else:
                 conn.request('GET', url, headers=headers)
+            res = conn.getresponse()
 
         elif 'publications' in url:
 
-            conn = http.client.HTTPConnection("localhost:5020")
-            conn.request("POST", "/users/login", json_data_post, headers=headers)
+            conn = http.client.HTTPConnection("localhost:5010")
+            conn.request("POST", "/users/login", json_data_post, headers={'Content-type': 'application/json'})
             res = conn.getresponse()
             data = res.read()
-
+            #print(data)
             data_json = json.loads(data.decode("utf-8"))
             jwt_token = data_json['token']
 
@@ -55,10 +57,15 @@ class PersonsRepository(object):
                 'authorization': jwt_token
             }
 
+            conn = http.client.HTTPConnection("localhost:5020")
+
             if 'friends' in url or 'mypubs' in url:
-                conn.request('GET', url, headers=new_headers)
+                conn.request('GET', url, json_data_post,headers=new_headers)
             else:
-                conn.request('POST', url, headers=new_headers)
+                conn.request('POST', url, json_data_post,headers=new_headers)
+            res = conn.getresponse()
+        #print(res.read().decode('utf-8'))
+        return res.read().decode('utf-8')
 
 
             

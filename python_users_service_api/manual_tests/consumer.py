@@ -45,19 +45,19 @@ headers = login()
 # print(headers)
 
 create_data = {
-    'email': 'red@gmail.com',
-    'name': 'Red Head',
+    'email': 'grefg@gmail.com',
+    'name': 'The Grefg',
     'password': '123456',
-    'username': 'redhead'
+    'username': 'grefg'
 }
-create_data_post = json.dumps(create_data)
-#conn.request("GET", "/users?id=2", headers=headers)
+#create_data_post = json.dumps(create_data)
+conn.request("GET", "/users?id=1", headers=headers)
 #conn.request("POST","/users/user1/1/user2/2/send-friend-request", headers=headers)
 #conn.request("POST","/users/2/friendRequestId/4/status/accepted", headers=headers)
 
 # conn.request("GET", "/ping", headers={'Content-type': 'application/json'})
 
-conn.request("POST", "/users/create", create_data_post, headers={'Content-type': 'application/json'})
+#conn.request("POST", "/users/create", create_data_post, headers={'Content-type': 'application/json'})
 
 start = datetime.datetime.now()
 res = conn.getresponse()

@@ -4,17 +4,25 @@ from services.GatewayService import GatewayService
 from flask import jsonify
 from bson import json_util, ObjectId
 import json
+
 gateway_api = Blueprint('gateway_api', __name__)
 
 gateway_service = GatewayService()
 
-@gateway_api.route('/gateway/', methods=['GET'])
-def gateway(data, url):
-    new_url = url[8:]
-    print(url)
-    print(new_url)
+@gateway_api.route('/', methods=['GET'], defaults={'path': ''})
+@gateway_api.route('/<path:path>', methods=['GET'])
+
+def gateway(path):
+    data = request.json    
+    print(path)
     try:
-        gateway_service.gateway(data, new_url)
-        print("Hola")
+        res = gateway_service.gateway(data, path)
+        print("Esta es la: "+str(res))
+        if res is None:
+            resp = jsonify({'message': 'Bad request'})
+            resp.status_code = 402
+        else:
+            resp = res
+        return resp
     except Exception as e:
         print(e)

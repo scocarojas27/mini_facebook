@@ -5,4 +5,4 @@ class GatewayService(object):
         self.gateway_repository = GatewayRepository()
 
     def gateway(self, data, url):
-        self.gateway_repository.gateway()
+        return self.gateway_repository.gateway(data, url)
