@@ -59,12 +59,12 @@ def ping():
         resp.status_code = 500
     return resp
 
-@publications_api.route('/publications',
+@publications_api.route('/publications/mypubs',
                         methods = ['GET'])
 @jwt_required
 def get_own_publications():
     try:
-        app.logger.info("in /publications[GET]")
+        app.logger.info("in /publications/mypubs[GET]")
         publication_body = request.json
         if "user_id" in publication_body:
             posts = publications_service.get_own_posts(publication_body["user_id"])

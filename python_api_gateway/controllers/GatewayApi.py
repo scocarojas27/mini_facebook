@@ -8,10 +8,13 @@ gateway_api = Blueprint('gateway_api', __name__)
 
 gateway_service = GatewayService()
 
-@gateway_api.route('/gateway/', methods=['GET', 'POST'])
-def gateway(url):
+@gateway_api.route('/gateway/', methods=['GET'])
+def gateway(data, url):
     new_url = url[8:]
+    print(url)
+    print(new_url)
     try:
-        gateway_service.gatewaynew_url)
+        gateway_service.gateway(data, new_url)
+        print("Hola")
     except Exception as e:
         print(e)
