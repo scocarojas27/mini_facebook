@@ -11,6 +11,7 @@ persons_service = PersonsService()
 # To Do in Class
 @persons_api.route('/persons/', methods=['POST'])
 def add_person():
+    #Recibe la petición de crear un nodo nuevo
     try:
         _json = request.json
         _id = _json['id']
@@ -29,6 +30,7 @@ def add_person():
 
 @persons_api.route('/persons', methods=['GET'])
 def get_all_persons():
+    #Recibe la petición de consultar todos los nodos de la base de datos
     try:
         app.logger.info("in /persons")
         
@@ -41,6 +43,7 @@ def get_all_persons():
 
 @persons_api.route('/persons/<int:personId>/friends', methods=['GET'])
 def get_friends(personId):
+    #Recibe la petición para consultar los amigos de un nodo
     try:
         row = persons_service.get_friends(personId)
         new_row = json.loads(json_util.dumps(row))
@@ -53,6 +56,7 @@ def get_friends(personId):
 
 @persons_api.route('/persons/<string:name>/byName', methods=['GET'])
 def get_person_by_name(name):
+    #Recibe la petición para consultar un nodo por su nombre, actualmente no se debe usar
     try:
         row = persons_service.get_person_by_name(name)
         resp = jsonify(row)
@@ -63,6 +67,7 @@ def get_person_by_name(name):
 
 @persons_api.route('/persons/<int:personId>/mayYouKnow', methods=['GET'])
 def get_friends_from_my_friends(personId):
+    #Recibe la petición para obtener los amigos de los amigos de un nodo
     try:
         row = persons_service.get_friends_from_my_friends(personId)
         new_row = json.loads(json_util.dumps(row))
@@ -74,6 +79,7 @@ def get_friends_from_my_friends(personId):
 
 @persons_api.route('/persons/person1/<int:personId1>/person2/<int:personId2>', methods=['POST'])
 def add_new_relationship(personId1, personId2):
+    #Recibe la petición para relacionar dos nodos como amigos
     try:
         if personId1 and personId2:
             persons_service.add_new_relationship(personId1, personId2)
@@ -85,6 +91,7 @@ def add_new_relationship(personId1, personId2):
 
 @persons_api.route('/persons/delete/person1/<int:personId1>/person2/<int:personId2>', methods=['POST'])
 def delete_relationship(personId1, personId2):
+    #Recibe la petición para eliminar una relación entre dos nodos
     try:
         if personId1 and personId2:
             persons_service.delete_relationship(personId1, personId2)

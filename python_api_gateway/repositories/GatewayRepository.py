@@ -7,6 +7,7 @@ headers = {
 
 class GatewayRepository(object):
     def gateway(self, data, url):
+        #Verifica el path obtenido, y dependiendo del contenido, la manda al servicio al que pertenezca
 
         json_data_post = json.dumps(data)
 
@@ -27,9 +28,9 @@ class GatewayRepository(object):
                     'authorization': jwt_token
                 }
                 if 'friendRequestId' in url or 'send-friend-request' in url:
-                    conn.request('POST', url, headers=headers)
+                    conn.request('POST', url, headers=new_headers)
                 else:
-                    conn.request('GET', url, headers=headers)
+                    conn.request('GET', url, headers=new_headers)
             else:
                 conn.request("POST", url, json_data_post, headers=headers)
             res = conn.getresponse()

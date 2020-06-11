@@ -15,12 +15,12 @@ class PublicationsRepository(object):
         return db.publications.count_documents({})
 
     def send_publication(self, publication):
-        print('Está mal')
+        #Inserta una publicación nueva en la base de datosasociada a una persona
         db = self.client['publicationsDB']
         #print(str(db))
         db = db['posts']
         print(str(db))
-        #results = db.insert_one(publication)
+        results = db.insert_one(publication)
         #print(results.inserted_id)
         return results
 
@@ -40,6 +40,7 @@ class PublicationsRepository(object):
         return self.getFriendsPosts(friends)
 
     def getFriendsPosts(self, friends):
+        #Se obtienen los posts de los amigos de una persona
         db = self.client["publicationsDB"]
         db = db["posts"]
         posts = []
@@ -52,6 +53,7 @@ class PublicationsRepository(object):
         return posts
 
     def getOwnPosts(self, id) :
+        #se obtienen los post asociados a una persona
         db = self.client["publicationsDB"]
         db = db["posts"]
         cursor = db.find({"user_id" : id}, {"_id" : 0})

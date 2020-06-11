@@ -13,6 +13,7 @@ headers = {
 }
 
 def daemon():
+    #Consultas las solictudes de amistad que estén aceptadas pero que aún no esten creadas y las crea
     query = "SELECT user_id_origin, user_id_target FROM friend_requests WHERE status='accepted';"
     update = "UPDATE friend_requests SET status='done' WHERE status='accepted';"
     try:

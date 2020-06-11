@@ -17,15 +17,16 @@ publications_service = PublicationsService()
                         methods = ['POST'])
 @jwt_required
 def create_publication():
+    #Recibe la petición para la creación de un nuevo post
     try:
         app.logger.info("in /publications[POST]")
         publication_body = request.json
         #print(publication_body)
         if 'user_id' in publication_body and 'description' in publication_body:
-            print("Hola")
+            #print("Hola")
             app.logger.info("user_id: " + str(publication_body['user_id']) + ' - description: ' + str(publication_body['description']))
             result = publications_service.send_publication(publication_body)
-            print("Hola 3")
+            #print("Hola 3")
             if result:
                 resp = jsonify({'message': 'publication received'})
                 resp.status_code = 201
@@ -63,6 +64,7 @@ def ping():
                         methods = ['GET'])
 @jwt_required
 def get_own_publications():
+    #Recibe la petición para la consulta de las publicaciones de una persona
     try:
         app.logger.info("in /publications/mypubs[GET]")
         publication_body = request.json
@@ -83,6 +85,7 @@ def get_own_publications():
                         methods = ['GET'])
 @jwt_required
 def get_friends_publications():
+    #Recibe la petición para obtener las publicaciones de los amigos de una persona
     try:
         app.logger.info("in /publications/friends[GET]")
         publication_body = request.json

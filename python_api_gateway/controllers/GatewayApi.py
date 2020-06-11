@@ -13,6 +13,7 @@ gateway_service = GatewayService()
 @gateway_api.route('/<path:path>', methods=['GET'])
 
 def gateway(path):
+    #Recibe el path de la petición y la envia a la función del repositorio
     data = request.json    
     print(path)
     try:

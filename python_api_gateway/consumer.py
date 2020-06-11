@@ -24,7 +24,7 @@ headers = {
     'Content-type': 'application/json'
 }
 
-#url = "/users?id=1"
+url = "/users?id=1"
 
 login_data = {
     'username': 'blue',
@@ -47,13 +47,13 @@ pub_data = {
     'user_id' : 1
 }
 
-json_data_post = json.dumps(login_data)
+json_data_post = json.dumps(friend_data)
 json_data_post_ = json.dumps(pub_data)
-new_headers = login(json_data_post)
+new_headers = login(json_data_post_)
 
 #print(new_headers)
 
-#conn.request("GET", url, json_data_post, headers=headers)
+#conn.request("GET", url, json_data_post, headers=new_headers)
 #conn.request("GET", "/persons/1/friends", json_data_post,headers=headers)
 conn.request("GET", "/publications/mypubs", json_data_post_, headers=new_headers)
 

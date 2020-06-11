@@ -51,9 +51,9 @@ create_data = {
     'username': 'grefg'
 }
 #create_data_post = json.dumps(create_data)
-conn.request("GET", "/users?id=1", headers=headers)
-#conn.request("POST","/users/user1/1/user2/2/send-friend-request", headers=headers)
-#conn.request("POST","/users/2/friendRequestId/4/status/accepted", headers=headers)
+conn.request("GET", "/users?id=1", headers=headers) #Consulta una persona
+#conn.request("POST","/users/user1/1/user2/2/send-friend-request", headers=headers) #Enviar una solicitud de amistad
+#conn.request("POST","/users/2/friendRequestId/4/status/accepted", headers=headers) #Responde una solicitud de amistad
 
 # conn.request("GET", "/ping", headers={'Content-type': 'application/json'})
 

@@ -35,7 +35,7 @@ create_person_post = {
 }
 json_data_post = json.dumps(create_person_post)
 print(json_data_post)
-conn.request("POST", "/persons/", json_data_post, headers=headers)
+conn.request("POST", "/persons/", json_data_post, headers=headers)#Crear una persona
 
 #Friends of a person
 

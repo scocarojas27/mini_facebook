@@ -51,16 +51,16 @@ headers = login()
 
 login_post = {
     'user_id': 2,
-    'description': 'El Dr. Rashid Buttar acusa a Bill Gates y Anthony Faucci la máxima autoridad en el manejo de la pandemia del coronavirus en EE.UU., de crear SARS-COV2 y de intentar vacunar en masa a la población para diezmarla y controlarla'
+    'description': 'Hola qué más'
 }
 query_post = {
     'user_id' : 1
 }
 data_get = json.dumps(query_post)
 json_data_post = json.dumps(login_post)
-#conn.request("POST", "/publications", json_data_post, headers=headers)
-#conn.request("GET", "/publications", data_get, headers=headers)
-conn.request("GET", "/publications/friends", data_get, headers=headers)
+conn.request("POST", "/publications", json_data_post, headers=headers) #Creación de una publicación
+#conn.request("GET", "/publications/mypubs", data_get, headers=headers) #Consulta las publicaciones de un usuario
+#conn.request("GET", "/publications/friends", data_get, headers=headers) #consulta las publicaciones de los amigos de un usuario
 
 # conn.request("GET", "/ping", headers={'Content-type': 'application/json'})
 

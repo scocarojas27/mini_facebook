@@ -16,6 +16,7 @@ users_service = UsersService()
                  methods = ['POST'])
 
 def create_new_user():
+    #Recibe la petición de creación de usuario y la envía al repository para crearlo
     try:
         app.logger.info("in /users")
         json = request.json
@@ -42,6 +43,7 @@ def create_new_user():
 @users_api.route('/users/login',
                  methods = ['POST'])
 def login():
+    #Valida las credenciales del usuario y devuelve un token de seguridad que lo certifica
     try:
         app.logger.info("in /login")
         json = request.json
@@ -50,6 +52,9 @@ def login():
         user_id = users_service.login(username,
                                       password)
         app.logger.info("user_id: " + str(user_id['id']))
+        #print(user_id)
+        #print(username)
+        #print(password)
         if user_id is None:
             resp = jsonify({'message': 'incorrect username or password'})
             resp.status_code = 401
@@ -65,6 +70,7 @@ def login():
                  methods = ['GET'])
 @jwt_required
 def get_users():
+    #Recibe las peticiones de búsqueda de usuarios, ya sea por id o nombre
     try:
         app.logger.info("in /users")
         user_id = request.args.get('id', default = None, type = int)
@@ -101,6 +107,7 @@ def get_users():
                  methods = ['POST'])
 @jwt_required
 def send_friend_request(userId1, userId2):
+    #Recibe las solicitudes de amistad y las direcciona al repository para que sean creadas
     try:
         app.logger.info("in /users")
         if userId1 is not None and userId2 is not None:
@@ -120,6 +127,7 @@ def send_friend_request(userId1, userId2):
                  methods = ['GET'])
 @jwt_required
 def friend_requests():
+    #Recibe la petición de consulta de solicitudes de amistad de una persona
     try:
         app.logger.info("in /users")
         user_id = request.args.get('userId', default = None, type = int)
@@ -140,6 +148,7 @@ def friend_requests():
                  methods = ['POST'])
 @jwt_required
 def respond_friend_request(userId, friendRequestId, status):
+    #Recibe la petición de modificar el estado de una solicitud de amistad
     try:
         app.logger.info("in /users")
         states = ['accepted', 'rejected']
